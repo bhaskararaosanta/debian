@@ -1,0 +1,207 @@
+#include<stdio.h>
+#include<stdlib.h>
+
+struct node{
+	int data;
+	struct node *left;
+	struct node *right;
+};
+
+struct node *head = NULL;
+
+void insert_at_begin(int);
+void insert_at_end(int);
+void traverse();
+int length();
+//void delete_at_begin();
+//void delete_at_end();
+int count = 0;
+
+int main()
+{
+	int choice, data;
+	for(;;)
+	{
+		printf("Enter '1' to insert node at begin\n");
+		printf("Enter '2' to insert node at end\n");
+		printf("Enter '3' to traverse all nodes and print data\n");
+		printf("Enter '4' to delete node at begin\n");
+		printf("Enter '5' to delete node at end\n");
+		printf("Enter '6' to exit from entering data\n");
+	
+		printf("Enter your choice\n");
+		scanf("%d", &choice);
+	
+		if(choice == 1)
+		{
+			printf("Enter data to be kept in node\n");
+			scanf("%d", &data);
+			insert_at_begin(data);
+		}
+		else if(choice == 2)
+		{
+			printf("Enter data to be kept in node\n");
+			scanf("%d", &data);
+			insert_at_end(data);
+		}
+		else if(choice == 3)
+		{
+			traverse();
+		}
+		/*else if(choice == 4)
+		{
+			delete_at_begin();
+		}
+		else if(choice == 5)
+		{
+			delete_at_end();
+		}*/
+		else if(choice == 6)
+		{
+			break;
+		}
+		else
+		{
+			printf("please enter valid option\n");
+		}
+		printf("length of linked list is:%d\n", length());
+	}
+	return 0;
+}
+
+void insert_at_begin(int x)
+{
+	struct node *temp = NULL;
+	temp = (struct node *)malloc(sizeof(struct node));
+	count++;
+	temp->data = x;
+	temp->left = NULL;
+	temp->right = NULL;
+	if(head == NULL)
+	{
+		head = temp;
+		return;
+	}
+	else
+	{
+		temp->right = temp;
+		head->left = temp;
+		head = temp;
+	}
+}
+
+void insert_at_end(int y)
+{
+	struct node *temp, *traverse=NULL;
+	temp = (struct node *)malloc(sizeof(struct node));
+	count++;
+	temp->data = y;
+	temp->left = NULL;
+	temp->right = NULL;
+	if(head == NULL)
+	{
+		printf("No nodes available till now and insert node at begin\n");
+		head = temp;
+	}
+	else
+	{
+		traverse = head;
+		while(traverse->right != NULL)
+		{
+			traverse = traverse->right;
+		}
+		traverse->right = temp;
+		temp->left = traverse;
+	}
+}
+
+int length()
+{
+	struct node *temp = head;
+	int len = 0;
+	while(temp != NULL)
+	{
+		len++;
+		temp = temp->right;
+	}
+	return len;
+}
+
+
+void traverse()
+{
+	struct node *temp;
+	temp = head;
+	if(temp == NULL)
+	{
+		printf("No nodes created till now\n");
+		return;
+	}
+	else
+	{
+		while(temp != NULL)
+		{
+			printf("node data is:%d\n", temp->data);
+			temp = temp->right;
+		}	
+	}
+	printf("node data is:%d\n", temp->data);	
+}
+
+/*void delete_at_begin()
+{
+	struct node *temp;
+	int n;
+	if(head == NULL)
+	{
+		printf("No nodes created till now\n");
+		return;
+	}
+	else
+	{
+		n = head->data;
+		temp = head;
+		head = temp->next;
+	}
+	temp->next = NULL;
+	free(temp);
+	count--;
+	printf("%d deleted from beginning successfully\n", n);
+}
+
+void delete_at_end()
+{
+	struct node *temp, *temp1;
+	int n;
+	if(head == NULL)
+	{
+		printf("No nodes created till now\n");
+		return;
+	}
+	count--;
+	if(head->next == NULL)
+	{
+		n = head->data;
+		free(head);
+		head = NULL;
+		printf("%d deleted from end successfully.\n", n);
+		return;
+	}
+	temp = head;
+	while(temp->next != NULL)
+	{
+		temp1 = temp;
+		temp = temp->next;
+	}
+	n = temp->data;
+	temp1->next = NULL;
+	free(temp);
+	printf("%d deleted at end successfully\n", n);
+}*/
+
+
+
+
+
+
+
